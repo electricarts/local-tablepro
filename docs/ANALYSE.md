@@ -18,7 +18,7 @@ Die zentrale Funktion – eine laufende Local-Datenbank mit einem Klick in einem
 
 ## Aktuelle Local-Schnittstelle
 
-Die aktuelle Local-Dokumentation führt den verwendeten Content-Hook weiterhin auf. Das `site`-Objekt stellt unter anderem `site.mysql` bereit; der Socket liegt unter `context.environment.userDataPath/run/<site-id>/mysql/mysqld.sock`. Local legt den Benutzer typischerweise als `root@localhost` an. Deshalb verwendet das Add-on den Unix-Socket statt der ebenfalls vorhandenen Loopback-TCP-Schnittstelle.
+Die aktuelle Local-Dokumentation führt den verwendeten Content-Hook weiterhin auf. Das `site`-Objekt stellt unter anderem `site.mysql` bereit; der Socket liegt unter `context.environment.userDataPath/run/<site-id>/mysql/mysqld.sock`. Local legt den Benutzer typischerweise als `root@localhost` an. TablePro unterstützt in seiner direkten URL keinen frei wählbaren lokalen Socket und sein MySQL-Treiber übergibt keinen Socketpfad an `mysql_real_connect`. Das Add-on verwendet deshalb eine pro Site wiederverwendete TCP-zu-Unix-Socket-Brücke auf Loopback.
 
 Relevante Quellen:
 
@@ -45,11 +45,11 @@ TablePros `tablepro://import`-Aktion wurde nicht verwendet: Sie speichert eine V
 |---|---|---|
 | Local-UI | Button im Database-Reiter | gleicher offizieller Content-Hook |
 | Site-Status | Socket-Lockdatei | Socket-Lockdatei plus gültiger TCP-Port |
-| Verbindung | impliziter Standard-Socket | expliziter Site-Socket über `localhost` |
+| Verbindung | impliziter Standard-Socket | Loopback-Brücke zum expliziten Site-Socket |
 | Client-Auswahl | Standard-Handler von `mysql://` | erzwungenes Bundle `com.TablePro` |
 | Prozessstart | Shell-String mit `exec` | Argumentliste mit `execFile` |
 | Kodierung | teilweise | Benutzer, Passwort, DB und Name vollständig kodiert |
-| `/tmp/mysql.sock` | wird pauschal gelöscht/neu verlinkt | nur vorhandene Symlinks werden sicher aktualisiert |
+| `/tmp/mysql.sock` | wird pauschal gelöscht/neu verlinkt | wird nicht verwendet oder verändert |
 | Lebenszyklus | Intervall ohne Cleanup | Intervall wird beim Unmount beendet |
 | Laufzeitabhängigkeiten | gebündelte Komponentenbibliothek | keine; nutzt Locals React-Laufzeit |
 | Installation | `.tgz` | `.tgz`, Entwicklungs-Link und manueller Fallback dokumentiert |

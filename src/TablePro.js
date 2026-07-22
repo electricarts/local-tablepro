@@ -5,10 +5,9 @@ const fs = require('fs');
 const path = require('path');
 const {
 	TABLEPRO_BUNDLE_ID,
-	TABLEPRO_SOCKET_PATH,
 	buildConnectionURL,
-	ensureSocketSymlink,
 } = require('./connection');
+const { closeSocketProxy, getSocketProxyPort } = require('./socketProxy');
 
 export default class TablePro extends React.Component {
 	constructor (props) {
@@ -26,7 +25,12 @@ export default class TablePro extends React.Component {
 	componentDidMount () {
 		this.mounted = true;
 		this.props.context.hooks.addAction('siteStarted', () => this.updateState());
-		this.props.context.hooks.addAction('siteStopped', () => this.updateState());
+		this.props.context.hooks.addAction('siteStopped', (site) => {
+			if (!site || site.id === this.props.site.id) {
+				closeSocketProxy(this.props.site.id);
+			}
+			this.updateState();
+		});
 		this.updateState();
 		this.updateTimer = setInterval(() => this.updateState(), 1000);
 	}
@@ -94,7 +98,7 @@ export default class TablePro extends React.Component {
 		}
 	}
 
-	openTablePro () {
+	async openTablePro () {
 		if (!this.canConnect() || this.state.opening) {
 			return;
 		}
@@ -102,19 +106,17 @@ export default class TablePro extends React.Component {
 		let connectionURL;
 
 		try {
-			const socketResult = ensureSocketSymlink(this.getSocketFile(), TABLEPRO_SOCKET_PATH);
-			if (!socketResult.ok) {
-				throw socketResult.error;
-			}
-
-			connectionURL = buildConnectionURL(this.props.site);
+			this.setState({ opening: true, hasError: false });
+			const proxyPort = await getSocketProxyPort(this.props.site.id, this.getSocketFile());
+			connectionURL = buildConnectionURL(this.props.site, proxyPort);
 		} catch (error) {
 			console.error('[local-tablepro]', error);
-			this.setState({ hasError: true });
+			if (this.mounted) {
+				this.setState({ opening: false, hasError: true });
+			}
 			return;
 		}
 
-		this.setState({ opening: true, hasError: false });
 		execFile('/usr/bin/open', ['-b', TABLEPRO_BUNDLE_ID, connectionURL], (error) => {
 			if (error) {
 				console.error('[local-tablepro] Could not open TablePro.', error);

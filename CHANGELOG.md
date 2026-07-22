@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.0.3 – 2026-07-22
+
+- Überbrückt TablePros fehlende direkte Local-Socket-Unterstützung mit einem lokalen TCP-zu-Unix-Socket-Proxy.
+- Bindet die Brücke ausschließlich an `127.0.0.1` und verwendet einen automatisch vergebenen Port.
+- Ändert keine MySQL-Benutzer oder Grants und benötigt keinen globalen `/tmp/mysql.sock`-Link.
+- Schließt die Site-Brücke, wenn Local die Site stoppt.
+- Ergänzt einen Ende-zu-Ende-Test der lokalen Socket-Brücke.
+
 ## 1.0.2 – 2026-07-22
 
 - Verbindet über Locals Unix-Socket, damit Local-MySQLs `root@localhost`-Berechtigung greift.
