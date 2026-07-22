@@ -13,7 +13,7 @@ Das Projekt überträgt den Workflow von [`aubreypwd/local-tableplus`](https://g
 
 ## Installation und Nutzung
 
-1. `local-tablepro-1.1.1.tgz` aus dem [aktuellen Release](https://github.com/electricarts/local-tablepro/releases/latest) laden.
+1. `local-tablepro-1.1.2.tgz` aus dem [aktuellen Release](https://github.com/electricarts/local-tablepro/releases/latest) laden.
 2. In Local **Add-ons → Installed → Install from Disk** öffnen.
 3. Das Archiv auswählen, **TablePro** aktivieren und Local neu starten.
 4. Eine Site starten, deren Reiter **Database** öffnen und **Open TablePro** anklicken.

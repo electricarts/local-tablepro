@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.1.2 – 2026-07-22
+
+- Corrects the React inline-style property so the Open TablePro action renders at the intended semibold weight.
+- Aligns the action's visual emphasis with Local's adjacent Open AdminNeo link.
+
 ## 1.1.1 – 2026-07-22
 
 - Replaces the add-on artwork with the supplied TablePro application icon.

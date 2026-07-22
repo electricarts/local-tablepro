@@ -125,7 +125,7 @@ export default class TablePro extends React.Component {
 			color,
 			cursor: this.state.disabled ? 'default' : 'pointer',
 			font: 'inherit',
-			'font-weight': 600,
+			fontWeight: 600,
 			'margin-right': 25,
 			opacity: 1,
 			padding: 0,
