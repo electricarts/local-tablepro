@@ -2,7 +2,7 @@
 
 Ein Local-Add-on für macOS, das die MySQL-Datenbank einer laufenden Local-WordPress-Site mit einem Klick in [TablePro](https://tablepro.app/) öffnet.
 
-Das Projekt ist eine auf TablePro übertragene und technisch bereinigte Variante von [`aubreypwd/local-tableplus`](https://github.com/aubreypwd/local-tableplus). Es verwendet weiterhin den offiziellen Local-Content-Hook, verbindet aber über den von Local bereitgestellten TCP-Port. Dadurch muss `/tmp/mysql.sock` weder gelöscht noch als symbolischer Link verändert werden.
+Das Projekt ist eine auf TablePro übertragene und technisch bereinigte Variante von [`aubreypwd/local-tableplus`](https://github.com/aubreypwd/local-tableplus). Es verwendet weiterhin den offiziellen Local-Content-Hook und verbindet über den Unix-Socket der ausgewählten Site. Der dafür benötigte Link `/tmp/mysql.sock` wird defensiv verwaltet: Das Add-on aktualisiert ausschließlich symbolische Links und überschreibt niemals eine echte Datei oder einen Socket.
 
 ## Voraussetzungen
 
@@ -13,7 +13,7 @@ Das Projekt ist eine auf TablePro übertragene und technisch bereinigte Variante
 
 ## Installation des fertigen Pakets
 
-1. Lade die Datei `local-tablepro-1.0.1.tgz` aus dem Release-Ordner herunter.
+1. Lade die Datei `local-tablepro-1.0.2.tgz` aus dem Release-Ordner herunter.
 2. Öffne in Local **Add-ons → Installed → Install from Disk**.
 3. Wähle die `.tgz`-Datei aus.
 4. Aktiviere **TablePro** und starte Local neu.
@@ -40,7 +40,7 @@ Der Button ist deaktiviert, wenn die Site gestoppt ist, kein gültiger MySQL-Por
 Das Add-on erstellt eine standardkonforme URL dieser Form:
 
 ```text
-mysql://USER:PASSWORD@127.0.0.1:PORT/DATABASE?name=SITE&env=local&safeModeLevel=0
+mysql://USER:PASSWORD@localhost/DATABASE?name=SITE&env=local&safeModeLevel=0
 ```
 
 Alle dynamischen Bestandteile werden percent-kodiert. TablePro wird gezielt über seine Bundle-ID gestartet:
@@ -51,7 +51,7 @@ Alle dynamischen Bestandteile werden percent-kodiert. TablePro wird gezielt übe
 
 Die Argumente werden ohne Shell an `open` übergeben. Dadurch können Site-Namen oder Zugangsdaten keine Shell-Befehle einschleusen, und ein anderes Programm wie TablePlus kann den `mysql://`-Link nicht abfangen.
 
-Die MySQL-Zugangsdaten müssen für eine direkte Verbindung Teil der URL sein. Sie werden nicht protokolliert, nicht dauerhaft vom Add-on gespeichert und nicht an einen Netzwerkdienst gesendet. TablePro zeigt externe Verbindungen vor dem Öffnen zur Bestätigung an.
+Bei jedem Klick zeigt `/tmp/mysql.sock` auf den Socket der ausgewählten, laufenden Site. Existiert dort etwas anderes als ein symbolischer Link, bricht das Add-on mit einer Fehlermeldung ab. Die MySQL-Zugangsdaten müssen für eine direkte Verbindung Teil der URL sein. Sie werden nicht protokolliert, nicht dauerhaft vom Add-on gespeichert und nicht an einen Netzwerkdienst gesendet. TablePro zeigt externe Verbindungen vor dem Öffnen zur Bestätigung an.
 
 ## Entwicklung
 
@@ -71,7 +71,7 @@ Ein installierbares Archiv wird mit folgendem Befehl erzeugt:
 npm run release
 ```
 
-Das Ergebnis liegt anschließend unter `dist/local-tablepro-1.0.1.tgz`.
+Das Ergebnis liegt anschließend unter `dist/local-tablepro-1.0.2.tgz`.
 
 ## Fehlerbehebung
 
@@ -83,8 +83,8 @@ Das Ergebnis liegt anschließend unter `dist/local-tablepro-1.0.1.tgz`.
 
 **TablePro meldet einen Verbindungsfehler**
 
-- Site stoppen und neu starten, damit Local den MySQL-Port neu bereitstellt.
-- Im Database-Reiter prüfen, ob Local Host, Port und Zugangsdaten anzeigt.
+- Site stoppen und neu starten, damit Local den MySQL-Socket neu bereitstellt.
+- Im Database-Reiter prüfen, ob Local Socket und Zugangsdaten anzeigt.
 - Eine Firewall- oder Netzwerkfilter-Regel für Loopback-Verbindungen prüfen.
 
 **Ein Klick hat keine sichtbare Wirkung**

@@ -5,8 +5,9 @@ const fs = require('fs');
 const path = require('path');
 const {
 	TABLEPRO_BUNDLE_ID,
+	TABLEPRO_SOCKET_PATH,
 	buildConnectionURL,
-	getMySQLPort,
+	ensureSocketSymlink,
 } = require('./connection');
 
 export default class TablePro extends React.Component {
@@ -47,6 +48,16 @@ export default class TablePro extends React.Component {
 		);
 	}
 
+	getSocketFile () {
+		return path.join(
+			this.props.context.environment.userDataPath,
+			'run',
+			this.props.site.id,
+			'mysql',
+			'mysqld.sock'
+		);
+	}
+
 	getApplicationPaths () {
 		const userHome = this.props.context.environment.userHome || '';
 
@@ -68,8 +79,7 @@ export default class TablePro extends React.Component {
 	canConnect () {
 		return process.platform === 'darwin'
 			&& this.hasTablePro()
-			&& this.isSiteRunning()
-			&& getMySQLPort(this.props.site) !== null;
+			&& this.isSiteRunning();
 	}
 
 	updateState () {
@@ -92,6 +102,11 @@ export default class TablePro extends React.Component {
 		let connectionURL;
 
 		try {
+			const socketResult = ensureSocketSymlink(this.getSocketFile(), TABLEPRO_SOCKET_PATH);
+			if (!socketResult.ok) {
+				throw socketResult.error;
+			}
+
 			connectionURL = buildConnectionURL(this.props.site);
 		} catch (error) {
 			console.error('[local-tablepro]', error);

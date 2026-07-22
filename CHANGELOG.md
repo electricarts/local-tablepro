@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.0.2 – 2026-07-22
+
+- Verbindet über Locals Unix-Socket, damit Local-MySQLs `root@localhost`-Berechtigung greift.
+- Verwendet `localhost` ohne TCP-Port in der TablePro-Verbindungs-URL.
+- Verwaltet `/tmp/mysql.sock` defensiv: Nur symbolische Links werden aktualisiert; echte Dateien oder Sockets bleiben unangetastet.
+- Ergänzt Tests für Erstellen, Wiederverwenden, Umschalten und sichere Ablehnung des Socket-Links.
+
 ## 1.0.1 – 2026-07-22
 
 - Liest den MySQL-Port aus der aktuellen Local-10-Struktur `site.services.mysql.ports.MYSQL`.

@@ -18,7 +18,7 @@ Die zentrale Funktion – eine laufende Local-Datenbank mit einem Klick in einem
 
 ## Aktuelle Local-Schnittstelle
 
-Die aktuelle Local-Dokumentation führt den verwendeten Content-Hook weiterhin auf. Das `site`-Objekt stellt unter anderem `site.mysql` bereit. Local 10 liefert den MySQL-Port unter `site.services.mysql.ports.MYSQL` als Array; ältere Versionen verwendeten `site.ports.MYSQL`. Das Add-on unterstützt beide Strukturen und kann deshalb eine eindeutige TCP-Verbindung zu genau der ausgewählten Site herstellen.
+Die aktuelle Local-Dokumentation führt den verwendeten Content-Hook weiterhin auf. Das `site`-Objekt stellt unter anderem `site.mysql` bereit; der Socket liegt unter `context.environment.userDataPath/run/<site-id>/mysql/mysqld.sock`. Local legt den Benutzer typischerweise als `root@localhost` an. Deshalb verwendet das Add-on den Unix-Socket statt der ebenfalls vorhandenen Loopback-TCP-Schnittstelle.
 
 Relevante Quellen:
 
@@ -45,11 +45,11 @@ TablePros `tablepro://import`-Aktion wurde nicht verwendet: Sie speichert eine V
 |---|---|---|
 | Local-UI | Button im Database-Reiter | gleicher offizieller Content-Hook |
 | Site-Status | Socket-Lockdatei | Socket-Lockdatei plus gültiger TCP-Port |
-| Verbindung | impliziter Standard-Socket | explizit `127.0.0.1:site.ports.MYSQL` |
+| Verbindung | impliziter Standard-Socket | expliziter Site-Socket über `localhost` |
 | Client-Auswahl | Standard-Handler von `mysql://` | erzwungenes Bundle `com.TablePro` |
 | Prozessstart | Shell-String mit `exec` | Argumentliste mit `execFile` |
 | Kodierung | teilweise | Benutzer, Passwort, DB und Name vollständig kodiert |
-| `/tmp/mysql.sock` | wird gelöscht/neu verlinkt | bleibt unangetastet |
+| `/tmp/mysql.sock` | wird pauschal gelöscht/neu verlinkt | nur vorhandene Symlinks werden sicher aktualisiert |
 | Lebenszyklus | Intervall ohne Cleanup | Intervall wird beim Unmount beendet |
 | Laufzeitabhängigkeiten | gebündelte Komponentenbibliothek | keine; nutzt Locals React-Laufzeit |
 | Installation | `.tgz` | `.tgz`, Entwicklungs-Link und manueller Fallback dokumentiert |
