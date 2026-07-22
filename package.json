@@ -1,7 +1,7 @@
 {
   "name": "local-tablepro",
   "productName": "TablePro",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "author": "Mario Peischl <mario@electricarts.de>",
   "keywords": [
     "local-addon",
@@ -9,7 +9,7 @@
     "database",
     "wordpress"
   ],
-  "bgColor": "#e8f2ff",
+  "bgColor": "#fff1df",
   "icon": "icon.png",
   "slug": "local-tablepro",
   "description": "Open Local WordPress databases in TablePro with one click.",

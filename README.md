@@ -19,7 +19,7 @@ Deutsch: [README.de.md](README.de.md)
 
 ## Install
 
-1. Download `local-tablepro-1.1.0.tgz` from the [latest release](https://github.com/electricarts/local-tablepro/releases/latest).
+1. Download `local-tablepro-1.1.1.tgz` from the [latest release](https://github.com/electricarts/local-tablepro/releases/latest).
 2. In Local, open **Add-ons → Installed → Install from Disk**.
 3. Select the `.tgz` file, enable **TablePro**, and restart Local.
 
@@ -64,7 +64,7 @@ Build an installable archive with:
 npm run release
 ```
 
-The archive is written to `dist/local-tablepro-1.1.0.tgz`.
+The archive is written to `dist/local-tablepro-1.1.1.tgz`.
 
 ## Troubleshooting
 

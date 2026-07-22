@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.1.1 – 2026-07-22
+
+- Replaces the add-on artwork with the supplied TablePro application icon.
+- Updates the Local Library card background to complement the new orange icon.
+
 ## 1.1.0 – 2026-07-22
 
 - Moves the loopback-to-Unix-socket bridge into Local's main process for reliable lifecycle management.
