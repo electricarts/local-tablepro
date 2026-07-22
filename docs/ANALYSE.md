@@ -18,7 +18,7 @@ Die zentrale Funktion – eine laufende Local-Datenbank mit einem Klick in einem
 
 ## Aktuelle Local-Schnittstelle
 
-Die aktuelle Local-Dokumentation führt den verwendeten Content-Hook weiterhin auf. Das `site`-Objekt stellt unter anderem `site.mysql` bereit; der Socket liegt unter `context.environment.userDataPath/run/<site-id>/mysql/mysqld.sock`. Local legt den Benutzer typischerweise als `root@localhost` an. TablePro unterstützt in seiner direkten URL keinen frei wählbaren lokalen Socket und sein MySQL-Treiber übergibt keinen Socketpfad an `mysql_real_connect`. Das Add-on verwendet deshalb eine pro Site wiederverwendete TCP-zu-Unix-Socket-Brücke auf Loopback.
+Die aktuelle Local-Dokumentation führt den verwendeten Content-Hook weiterhin auf. Das `site`-Objekt stellt unter anderem `site.mysql` bereit; der Socket liegt unter `context.environment.userDataPath/run/<site-id>/mysql/mysqld.sock`. Local legt den Benutzer typischerweise als `root@localhost` an. TablePro unterstützt in seiner direkten URL keinen frei wählbaren lokalen Socket und sein MySQL-Treiber übergibt keinen Socketpfad an `mysql_real_connect`. Das Add-on verwendet deshalb eine pro Site wiederverwendete TCP-zu-Unix-Socket-Brücke auf Loopback. `sslmode=require` verhindert bei MySQL 8 außerdem den fehlschlagenden RSA-Public-Key-Abruf des `caching_sha2_password`-Plugins.
 
 Relevante Quellen:
 

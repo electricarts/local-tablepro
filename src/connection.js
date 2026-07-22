@@ -20,7 +20,7 @@ function buildConnectionURL (site, port) {
 	const name = encode(site.name || 'Local');
 
 	return `mysql://${username}${password}@127.0.0.1:${numericPort}/${database}`
-		+ `?name=${name}&env=local&safeModeLevel=0`;
+		+ `?name=${name}&env=local&safeModeLevel=0&sslmode=require`;
 }
 
 module.exports = {

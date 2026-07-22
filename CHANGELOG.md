@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.0.4 – 2026-07-22
+
+- Erzwingt TLS für TablePros Verbindung durch die lokale Socket-Brücke.
+- Behebt MySQL-8-Fehler 2061 bei `caching_sha2_password`, ohne RSA-Schlüsselabruf oder Änderung des Root-Benutzers.
+- Live gegen eine laufende Local-10.1.1-/MySQL-8.0.35-Site mit `root@localhost` validiert.
+
 ## 1.0.3 – 2026-07-22
 
 - Überbrückt TablePros fehlende direkte Local-Socket-Unterstützung mit einem lokalen TCP-zu-Unix-Socket-Proxy.

@@ -21,7 +21,7 @@ const site = {
 assert.strictEqual(
 	buildConnectionURL(site, 12345),
 	'mysql://root%40example:p%40ss%3A%23%2F%25@127.0.0.1:12345/local%20db'
-		+ '?name=Demo%20%26%20Shop&env=local&safeModeLevel=0'
+		+ '?name=Demo%20%26%20Shop&env=local&safeModeLevel=0&sslmode=require'
 );
 assert.throws(() => buildConnectionURL({ ports: {} }, 12345), /valid MySQL connection/);
 assert.throws(() => buildConnectionURL(site, 70000), /valid MySQL connection/);

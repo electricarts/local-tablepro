@@ -13,7 +13,7 @@ Das Projekt ist eine auf TablePro übertragene und technisch bereinigte Variante
 
 ## Installation des fertigen Pakets
 
-1. Lade die Datei `local-tablepro-1.0.3.tgz` aus dem Release-Ordner herunter.
+1. Lade die Datei `local-tablepro-1.0.4.tgz` aus dem Release-Ordner herunter.
 2. Öffne in Local **Add-ons → Installed → Install from Disk**.
 3. Wähle die `.tgz`-Datei aus.
 4. Aktiviere **TablePro** und starte Local neu.
@@ -40,7 +40,7 @@ Der Button ist deaktiviert, wenn die Site gestoppt ist, kein gültiger MySQL-Por
 Das Add-on erstellt eine standardkonforme URL dieser Form:
 
 ```text
-mysql://USER:PASSWORD@127.0.0.1:PROXY_PORT/DATABASE?name=SITE&env=local&safeModeLevel=0
+mysql://USER:PASSWORD@127.0.0.1:PROXY_PORT/DATABASE?name=SITE&env=local&safeModeLevel=0&sslmode=require
 ```
 
 Alle dynamischen Bestandteile werden percent-kodiert. TablePro wird gezielt über seine Bundle-ID gestartet:
@@ -51,7 +51,7 @@ Alle dynamischen Bestandteile werden percent-kodiert. TablePro wird gezielt übe
 
 Die Argumente werden ohne Shell an `open` übergeben. Dadurch können Site-Namen oder Zugangsdaten keine Shell-Befehle einschleusen, und ein anderes Programm wie TablePlus kann den `mysql://`-Link nicht abfangen.
 
-Die Brücke erhält vom Betriebssystem einen freien Port und leitet die Bytes unverändert zum Site-Socket weiter. Sie ist nicht aus dem Netzwerk erreichbar und endet spätestens zusammen mit Local; beim Stoppen der Site wird ihre Brücke geschlossen. So authentifiziert MySQL die Verbindung weiterhin als `root@localhost`, ohne zusätzliche Benutzer oder Grant-Änderungen. Die MySQL-Zugangsdaten müssen für eine direkte Verbindung Teil der URL sein. Sie werden nicht protokolliert, nicht dauerhaft vom Add-on gespeichert und nicht an einen Netzwerkdienst gesendet. TablePro zeigt externe Verbindungen vor dem Öffnen zur Bestätigung an.
+Die Brücke erhält vom Betriebssystem einen freien Port und leitet die Bytes unverändert zum Site-Socket weiter. Sie ist nicht aus dem Netzwerk erreichbar und endet spätestens zusammen mit Local; beim Stoppen der Site wird ihre Brücke geschlossen. So authentifiziert MySQL die Verbindung weiterhin als `root@localhost`, ohne zusätzliche Benutzer oder Grant-Änderungen. Für MySQL 8 fordert die URL außerdem TLS an; dadurch funktioniert `caching_sha2_password`, ohne einen RSA-Schlüssel über eine unverschlüsselte Client-Verbindung abrufen zu müssen. Die MySQL-Zugangsdaten müssen für eine direkte Verbindung Teil der URL sein. Sie werden nicht protokolliert, nicht dauerhaft vom Add-on gespeichert und nicht an einen Netzwerkdienst gesendet. TablePro zeigt externe Verbindungen vor dem Öffnen zur Bestätigung an.
 
 ## Entwicklung
 
@@ -71,7 +71,7 @@ Ein installierbares Archiv wird mit folgendem Befehl erzeugt:
 npm run release
 ```
 
-Das Ergebnis liegt anschließend unter `dist/local-tablepro-1.0.3.tgz`.
+Das Ergebnis liegt anschließend unter `dist/local-tablepro-1.0.4.tgz`.
 
 ## Fehlerbehebung
 
