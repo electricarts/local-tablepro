@@ -43,9 +43,9 @@
     "@getflywheel/local": "^10.1.1",
     "@types/node": "^20.19.9",
     "@types/react": "^18.3.28",
-    "@types/react-dom": "^18.3.7",
+    "@types/react-dom": "^19.2.3",
     "react": "18.3.1",
-    "react-dom": "18.3.1",
+    "react-dom": "19.2.8",
     "react-router-dom": "4.3.1",
     "typescript": "^5.9.3"
   },
