@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Security report
+    url: https://github.com/electricarts/local-tablepro/security/advisories/new
+    about: Report vulnerabilities privately.
+  - name: Usage question
+    url: https://github.com/electricarts/local-tablepro/discussions
+    about: Ask for help using the add-on.

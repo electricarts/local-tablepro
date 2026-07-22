@@ -1,4 +1,5 @@
 import React from 'react';
+import { ipcAsync } from '@getflywheel/local/renderer';
 
 const { execFile } = require('child_process');
 const fs = require('fs');
@@ -7,7 +8,7 @@ const {
 	TABLEPRO_BUNDLE_ID,
 	buildConnectionURL,
 } = require('./connection');
-const { closeSocketProxy, getSocketProxyPort } = require('./socketProxy');
+const { START_SOCKET_PROXY } = require('./channels');
 
 export default class TablePro extends React.Component {
 	constructor (props) {
@@ -25,12 +26,7 @@ export default class TablePro extends React.Component {
 	componentDidMount () {
 		this.mounted = true;
 		this.props.context.hooks.addAction('siteStarted', () => this.updateState());
-		this.props.context.hooks.addAction('siteStopped', (site) => {
-			if (!site || site.id === this.props.site.id) {
-				closeSocketProxy(this.props.site.id);
-			}
-			this.updateState();
-		});
+		this.props.context.hooks.addAction('siteStopped', () => this.updateState());
 		this.updateState();
 		this.updateTimer = setInterval(() => this.updateState(), 1000);
 	}
@@ -49,16 +45,6 @@ export default class TablePro extends React.Component {
 			this.props.site.id,
 			'mysql',
 			'mysqld.sock.lock'
-		);
-	}
-
-	getSocketFile () {
-		return path.join(
-			this.props.context.environment.userDataPath,
-			'run',
-			this.props.site.id,
-			'mysql',
-			'mysqld.sock'
 		);
 	}
 
@@ -107,7 +93,7 @@ export default class TablePro extends React.Component {
 
 		try {
 			this.setState({ opening: true, hasError: false });
-			const proxyPort = await getSocketProxyPort(this.props.site.id, this.getSocketFile());
+			const proxyPort = await ipcAsync(START_SOCKET_PROXY, this.props.site.id);
 			connectionURL = buildConnectionURL(this.props.site, proxyPort);
 		} catch (error) {
 			console.error('[local-tablepro]', error);

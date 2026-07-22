@@ -6,7 +6,11 @@ const net = require('net');
 const os = require('os');
 const path = require('path');
 const { buildConnectionURL } = require('../lib/connection');
-const { closeAllSocketProxies, getSocketProxyPort } = require('../lib/socketProxy');
+const {
+	closeAllSocketProxies,
+	getSiteSocketPath,
+	getSocketProxyPort,
+} = require('../lib/socketProxy');
 
 const site = {
 	id: 'site-id',
@@ -25,6 +29,12 @@ assert.strictEqual(
 );
 assert.throws(() => buildConnectionURL({ ports: {} }, 12345), /valid MySQL connection/);
 assert.throws(() => buildConnectionURL(site, 70000), /valid MySQL connection/);
+assert.strictEqual(
+	getSiteSocketPath('/tmp/local-data', 'site_ID-123'),
+	path.join('/tmp/local-data', 'run', 'site_ID-123', 'mysql', 'mysqld.sock')
+);
+assert.throws(() => getSiteSocketPath('/tmp/local-data', '../escape'), /valid site ID/);
+assert.throws(() => getSiteSocketPath('', 'site-id'), /valid application data path/);
 
 function listen (server, target) {
 	return new Promise((resolve, reject) => {

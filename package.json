@@ -1,8 +1,8 @@
 {
   "name": "local-tablepro",
   "productName": "TablePro",
-  "version": "1.0.4",
-  "author": "Local TablePro contributors",
+  "version": "1.1.0",
+  "author": "Mario Peischl <mario@electricarts.de>",
   "keywords": [
     "local-addon",
     "tablepro",
@@ -13,6 +13,20 @@
   "icon": "icon.png",
   "slug": "local-tablepro",
   "description": "Open Local WordPress databases in TablePro with one click.",
+  "homepage": "https://github.com/electricarts/local-tablepro#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/electricarts/local-tablepro.git"
+  },
+  "bugs": {
+    "url": "https://github.com/electricarts/local-tablepro/issues"
+  },
+  "files": [
+    "lib",
+    "icon.png",
+    "CHANGELOG.md",
+    "PRIVACY.md"
+  ],
   "renderer": "lib/renderer.js",
   "main": "lib/main.js",
   "license": "GPL-3.0-only",
@@ -41,6 +55,6 @@
     "react-router-dom": "^4.3.1"
   },
   "engines": {
-    "local-by-flywheel": ">=5.0.0"
+    "local-by-flywheel": ">=10.0.0"
   }
 }

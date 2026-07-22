@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.1.0 – 2026-07-22
+
+- Moves the loopback-to-Unix-socket bridge into Local's main process for reliable lifecycle management.
+- Restricts renderer requests to validated Local site IDs; arbitrary socket paths are no longer accepted.
+- Adds English and German documentation, privacy/security/support policies, contribution guidance, issue templates, CI, and automated release packaging.
+- Sets the tested minimum version to Local 10 and prepares the first public GitHub release.
+
 ## 1.0.4 – 2026-07-22
 
 - Erzwingt TLS für TablePros Verbindung durch die lokale Socket-Brücke.

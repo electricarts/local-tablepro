@@ -1,99 +1,81 @@
 # Local TablePro
 
-Ein Local-Add-on für macOS, das die MySQL-Datenbank einer laufenden Local-WordPress-Site mit einem Klick in [TablePro](https://tablepro.app/) öffnet.
+[![CI](https://github.com/electricarts/local-tablepro/actions/workflows/ci.yml/badge.svg)](https://github.com/electricarts/local-tablepro/actions/workflows/ci.yml)
+[![Latest release](https://img.shields.io/github/v/release/electricarts/local-tablepro)](https://github.com/electricarts/local-tablepro/releases/latest)
+[![License: GPL-3.0](https://img.shields.io/badge/license-GPL--3.0-blue.svg)](LICENSE)
 
-Das Projekt ist eine auf TablePro übertragene und technisch bereinigte Variante von [`aubreypwd/local-tableplus`](https://github.com/aubreypwd/local-tableplus). Es verwendet weiterhin den offiziellen Local-Content-Hook. Da TablePro keinen beliebigen lokalen MySQL-Socket in einer Verbindungs-URL akzeptiert, startet das Add-on eine kleine, ausschließlich an `127.0.0.1` gebundene TCP-Brücke zum Unix-Socket der ausgewählten Site.
+A community add-on for [Local](https://localwp.com/) on macOS. It opens the database of a running Local WordPress site in [TablePro](https://tablepro.app/) with one click.
 
-## Voraussetzungen
+This project ports the workflow of [`aubreypwd/local-tableplus`](https://github.com/aubreypwd/local-tableplus) to TablePro. Because TablePro connection URLs cannot select an arbitrary MySQL Unix socket, the add-on creates a short-lived TCP bridge bound exclusively to `127.0.0.1` and forwards it to the selected site's Local socket.
 
-- macOS 14 oder neuer (Voraussetzung von TablePro)
-- [Local](https://localwp.com/) 5.0 oder neuer
-- [TablePro](https://tablepro.app/download) in `/Applications`, `/Applications/Setapp` oder `~/Applications`
-- eine gestartete Local-Site mit MySQL
+Deutsch: [README.de.md](README.de.md)
 
-## Installation des fertigen Pakets
+## Requirements
 
-1. Lade die Datei `local-tablepro-1.0.4.tgz` aus dem Release-Ordner herunter.
-2. Öffne in Local **Add-ons → Installed → Install from Disk**.
-3. Wähle die `.tgz`-Datei aus.
-4. Aktiviere **TablePro** und starte Local neu.
+- macOS 14 or later (TablePro requirement)
+- Local 10 or later
+- [TablePro](https://tablepro.app/download) installed in `/Applications`, `/Applications/Setapp`, or `~/Applications`
+- A running Local site using MySQL
 
-Falls **Install from Disk** in deiner Local-Version nicht angeboten wird, entpacke das Archiv und kopiere den Ordner nach:
+## Install
+
+1. Download `local-tablepro-1.1.0.tgz` from the [latest release](https://github.com/electricarts/local-tablepro/releases/latest).
+2. In Local, open **Add-ons → Installed → Install from Disk**.
+3. Select the `.tgz` file, enable **TablePro**, and restart Local.
+
+If your Local version does not offer **Install from Disk**, extract the archive to:
 
 ```text
 ~/Library/Application Support/Local/addons/local-tablepro
 ```
 
-Starte Local danach neu und aktiviere das Add-on unter **Add-ons → Installed**.
+Then restart Local and enable the add-on under **Add-ons → Installed**.
 
-## Nutzung
+## Use
 
-1. Starte die gewünschte Site in Local.
-2. Öffne den Reiter **Database**.
-3. Klicke **Open TablePro**.
-4. Bestätige beim ersten Aufruf den von TablePro angezeigten Verbindungsdialog. Für Loopback-Verbindungen kann TablePro die Freigabe auf Wunsch merken.
+1. Start a site in Local.
+2. Open its **Database** tab.
+3. Click **Open TablePro**.
+4. Approve TablePro's connection prompt on first use.
 
-Der Button ist deaktiviert, wenn die Site gestoppt ist, kein gültiger MySQL-Port vorhanden ist, TablePro nicht an einem der unterstützten Orte gefunden wird oder Local nicht unter macOS läuft.
+The button remains disabled if the site is stopped, TablePro is not found, or Local is not running on macOS.
 
-## Funktionsweise und Sicherheit
+## Security and privacy
 
-Das Add-on erstellt eine standardkonforme URL dieser Form:
+The main process creates a loopback-only bridge on an operating-system-assigned port and forwards the bytes unchanged to the site's MySQL Unix socket. The renderer may request a bridge only for a validated Local site ID; it cannot supply a filesystem path. The bridge is closed when the site stops or Local exits.
 
-```text
-mysql://USER:PASSWORD@127.0.0.1:PROXY_PORT/DATABASE?name=SITE&env=local&safeModeLevel=0&sslmode=require
-```
+TablePro is launched directly through its bundle ID without a shell. Dynamic URL fields are percent-encoded. MySQL credentials are required in the connection URL, but this add-on does not log, persist, or transmit them to an internet service. `sslmode=require` supports MySQL 8 `caching_sha2_password` without allowing an RSA-key exchange over an unencrypted client connection. See [PRIVACY.md](PRIVACY.md) and [SECURITY.md](SECURITY.md).
 
-Alle dynamischen Bestandteile werden percent-kodiert. TablePro wird gezielt über seine Bundle-ID gestartet:
-
-```text
-/usr/bin/open -b com.TablePro <URL>
-```
-
-Die Argumente werden ohne Shell an `open` übergeben. Dadurch können Site-Namen oder Zugangsdaten keine Shell-Befehle einschleusen, und ein anderes Programm wie TablePlus kann den `mysql://`-Link nicht abfangen.
-
-Die Brücke erhält vom Betriebssystem einen freien Port und leitet die Bytes unverändert zum Site-Socket weiter. Sie ist nicht aus dem Netzwerk erreichbar und endet spätestens zusammen mit Local; beim Stoppen der Site wird ihre Brücke geschlossen. So authentifiziert MySQL die Verbindung weiterhin als `root@localhost`, ohne zusätzliche Benutzer oder Grant-Änderungen. Für MySQL 8 fordert die URL außerdem TLS an; dadurch funktioniert `caching_sha2_password`, ohne einen RSA-Schlüssel über eine unverschlüsselte Client-Verbindung abrufen zu müssen. Die MySQL-Zugangsdaten müssen für eine direkte Verbindung Teil der URL sein. Sie werden nicht protokolliert, nicht dauerhaft vom Add-on gespeichert und nicht an einen Netzwerkdienst gesendet. TablePro zeigt externe Verbindungen vor dem Öffnen zur Bestätigung an.
-
-## Entwicklung
+## Development
 
 ```bash
-git clone <deine-repository-url> local-tablepro
+git clone https://github.com/electricarts/local-tablepro.git
 cd local-tablepro
-npm install
+npm ci
 npm test
 npm run link
 ```
 
-Nach `npm run link` Local neu starten. Während der Entwicklung kompiliert `npm run build` die Dateien aus `src/` nach `lib/`. `npm run unlink` entfernt ausschließlich den vom Link-Skript angelegten symbolischen Link.
+Restart Local after linking. `npm run build` compiles `src/` into `lib/`; `npm run unlink` removes only the symlink created by the link script.
 
-Ein installierbares Archiv wird mit folgendem Befehl erzeugt:
+Build an installable archive with:
 
 ```bash
 npm run release
 ```
 
-Das Ergebnis liegt anschließend unter `dist/local-tablepro-1.0.4.tgz`.
+The archive is written to `dist/local-tablepro-1.1.0.tgz`.
 
-## Fehlerbehebung
+## Troubleshooting
 
-**Der Button ist ausgegraut**
+- **Disabled button:** Start the site, check a supported TablePro installation path, then restart Local.
+- **Connection error:** Restart the site so Local recreates its MySQL socket, then try again.
+- **Nothing appears:** Start TablePro once manually, then inspect Local's developer tools for `[local-tablepro]` messages.
 
-- Site in Local starten.
-- Prüfen, ob TablePro als `TablePro.app` in `/Applications`, `/Applications/Setapp` oder `~/Applications` liegt.
-- Local nach Installation oder Aktivierung des Add-ons neu starten.
+For more help, read [SUPPORT.md](SUPPORT.md) or [open an issue](https://github.com/electricarts/local-tablepro/issues/new/choose).
 
-**TablePro meldet einen Verbindungsfehler**
+## License
 
-- Site stoppen und neu starten, damit Local den MySQL-Socket neu bereitstellt.
-- Im Database-Reiter prüfen, ob Local Socket und Zugangsdaten anzeigt.
-- Eine Firewall- oder Netzwerkfilter-Regel für Loopback-Verbindungen prüfen.
+GPL-3.0-only. See [LICENSE](LICENSE).
 
-**Ein Klick hat keine sichtbare Wirkung**
-
-- TablePro einmal manuell starten.
-- In Local **View → Toggle Developer Tools** öffnen und nach Meldungen mit `[local-tablepro]` suchen.
-
-## Lizenz
-
-GPL-3.0-only. Siehe [LICENSE](LICENSE).
-
-TablePro und Local sind eigenständige Projekte und Marken ihrer jeweiligen Rechteinhaber. Dieses Community-Add-on ist nicht offiziell mit ihnen verbunden.
+TablePro and Local are independent products and trademarks of their respective owners. This community add-on is not affiliated with or endorsed by either project.

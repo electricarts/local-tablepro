@@ -1,8 +1,20 @@
 'use strict';
 
 const net = require('net');
+const path = require('path');
 
 const proxies = new Map();
+
+function getSiteSocketPath (userDataPath, siteId) {
+	if (typeof userDataPath !== 'string' || userDataPath.length === 0) {
+		throw new Error('Local did not provide a valid application data path.');
+	}
+	if (typeof siteId !== 'string' || !/^[A-Za-z0-9_-]+$/.test(siteId)) {
+		throw new Error('Local did not provide a valid site ID.');
+	}
+
+	return path.join(userDataPath, 'run', siteId, 'mysql', 'mysqld.sock');
+}
 
 function destroyEntry (entry) {
 	entry.connections.forEach((socket) => socket.destroy());
@@ -82,5 +94,6 @@ function getSocketProxyPort (key, socketPath) {
 module.exports = {
 	closeAllSocketProxies,
 	closeSocketProxy,
+	getSiteSocketPath,
 	getSocketProxyPort,
 };

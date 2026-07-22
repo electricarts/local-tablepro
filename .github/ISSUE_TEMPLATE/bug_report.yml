@@ -1,0 +1,27 @@
+name: Bug report
+description: Report a reproducible problem with Local TablePro.
+title: "[Bug]: "
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: Remove passwords, site names, and personal filesystem paths from screenshots and logs.
+  - type: input
+    id: versions
+    attributes:
+      label: Versions
+      description: Add-on, Local, macOS, TablePro, and MySQL versions.
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Reproduction steps
+      description: What did you do, what happened, and what did you expect?
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: Sanitized logs
+      render: text
