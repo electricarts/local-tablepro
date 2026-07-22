@@ -13,7 +13,7 @@ Das Projekt ist eine auf TablePro übertragene und technisch bereinigte Variante
 
 ## Installation des fertigen Pakets
 
-1. Lade die Datei `local-tablepro-1.0.0.tgz` aus dem Release-Ordner herunter.
+1. Lade die Datei `local-tablepro-1.0.1.tgz` aus dem Release-Ordner herunter.
 2. Öffne in Local **Add-ons → Installed → Install from Disk**.
 3. Wähle die `.tgz`-Datei aus.
 4. Aktiviere **TablePro** und starte Local neu.
@@ -71,7 +71,7 @@ Ein installierbares Archiv wird mit folgendem Befehl erzeugt:
 npm run release
 ```
 
-Das Ergebnis liegt anschließend unter `dist/local-tablepro-1.0.0.tgz`.
+Das Ergebnis liegt anschließend unter `dist/local-tablepro-1.0.1.tgz`.
 
 ## Fehlerbehebung
 

@@ -15,6 +15,12 @@ const site = {
 
 assert.strictEqual(getMySQLPort(site), 10005);
 assert.strictEqual(getMySQLPort({ ports: { MYSQL: '10006' } }), 10006);
+assert.strictEqual(getMySQLPort({
+	services: { mysql: { ports: { MYSQL: [10134] } } },
+}), 10134);
+assert.strictEqual(getMySQLPort({
+	services: { mysql: { ports: { MYSQL: '10135' } } },
+}), 10135);
 assert.strictEqual(getMySQLPort({ ports: { MYSQL: 70000 } }), null);
 assert.strictEqual(getMySQLPort({}), null);
 

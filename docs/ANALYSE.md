@@ -18,7 +18,7 @@ Die zentrale Funktion – eine laufende Local-Datenbank mit einem Klick in einem
 
 ## Aktuelle Local-Schnittstelle
 
-Die aktuelle Local-Dokumentation führt den verwendeten Content-Hook weiterhin auf. Das `site`-Objekt stellt unter anderem `site.mysql` sowie `site.ports.MYSQL` bereit. Deshalb kann das Add-on eine eindeutige TCP-Verbindung zu genau der ausgewählten Site herstellen.
+Die aktuelle Local-Dokumentation führt den verwendeten Content-Hook weiterhin auf. Das `site`-Objekt stellt unter anderem `site.mysql` bereit. Local 10 liefert den MySQL-Port unter `site.services.mysql.ports.MYSQL` als Array; ältere Versionen verwendeten `site.ports.MYSQL`. Das Add-on unterstützt beide Strukturen und kann deshalb eine eindeutige TCP-Verbindung zu genau der ausgewählten Site herstellen.
 
 Relevante Quellen:
 

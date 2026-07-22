@@ -112,14 +112,19 @@ export default class TablePro extends React.Component {
 	}
 
 	buttonStyle () {
+		const color = this.state.hasError
+			? '#ff6b6b'
+			: (this.state.disabled ? '#d5d5d5' : '#55c987');
+
 		return {
 			background: 'transparent',
 			border: 0,
-			'color': this.state.hasError ? '#cc6565' : '#2d7ff9',
+			color,
 			cursor: this.state.disabled ? 'default' : 'pointer',
 			font: 'inherit',
+			'font-weight': 600,
 			'margin-right': 25,
-			opacity: this.state.disabled ? 0.5 : 1,
+			opacity: 1,
 			padding: 0,
 		};
 	}

@@ -7,7 +7,16 @@ function encode (value) {
 }
 
 function getMySQLPort (site) {
-	const rawPort = site && site.ports ? site.ports.MYSQL : undefined;
+	const legacyPort = site && site.ports ? site.ports.MYSQL : undefined;
+	const servicePort = site
+		&& site.services
+		&& site.services.mysql
+		&& site.services.mysql.ports
+		? site.services.mysql.ports.MYSQL
+		: undefined;
+	const rawPort = Array.isArray(servicePort)
+		? servicePort[0]
+		: (servicePort === undefined ? legacyPort : servicePort);
 	const port = Number(rawPort);
 
 	if (!Number.isInteger(port) || port < 1 || port > 65535) {
