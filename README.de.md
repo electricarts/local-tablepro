@@ -2,7 +2,7 @@
 
 Ein Community-Add-on für Local unter macOS, das die MySQL-Datenbank einer laufenden Local-WordPress-Site mit einem Klick in [TablePro](https://tablepro.app/) öffnet.
 
-Das Projekt überträgt den Workflow von [`aubreypwd/local-tableplus`](https://github.com/aubreypwd/local-tableplus) auf TablePro. Weil TablePro in einer Verbindungs-URL keinen beliebigen MySQL-Unix-Socket auswählen kann, erstellt das Add-on eine kurzlebige, ausschließlich an `127.0.0.1` gebundene TCP-Brücke zum Socket der ausgewählten Site.
+Version 2 ist eine eigenständige Implementierung auf Grundlage der dokumentierten Local-Add-on-API und der öffentlichen TablePro-URL-Schnittstelle. Weil TablePro in einer Verbindungs-URL keinen beliebigen MySQL-Unix-Socket auswählen kann, erstellt das Add-on eine kurzlebige, ausschließlich an `127.0.0.1` gebundene TCP-Brücke zum Socket der ausgewählten Site. Details stehen in der [Herkunftsdokumentation](docs/INDEPENDENT-REIMPLEMENTATION.md) und der [Lizenzhistorie](docs/LICENSE_HISTORY.md).
 
 ## Voraussetzungen
 
@@ -13,7 +13,7 @@ Das Projekt überträgt den Workflow von [`aubreypwd/local-tableplus`](https://g
 
 ## Installation und Nutzung
 
-1. `local-tablepro-1.1.2.tgz` aus dem [aktuellen Release](https://github.com/electricarts/local-tablepro/releases/latest) laden.
+1. Das `.tgz`-Archiv aus dem [aktuellen Release](https://github.com/electricarts/local-tablepro/releases/latest) laden.
 2. In Local **Add-ons → Installed → Install from Disk** öffnen.
 3. Das Archiv auswählen, **TablePro** aktivieren und Local neu starten.
 4. Eine Site starten, deren Reiter **Database** öffnen und **Open TablePro** anklicken.
@@ -30,4 +30,4 @@ Weitere Informationen stehen in [README.md](README.md), [PRIVACY.md](PRIVACY.md)
 
 ## Lizenz
 
-GPL-3.0-only. Siehe [LICENSE](LICENSE).
+MIT ab Version 2. Releases bis einschließlich 1.1.2 bleiben GPL-3.0-only. Siehe [LICENSE](LICENSE) und [Lizenzhistorie](docs/LICENSE_HISTORY.md).

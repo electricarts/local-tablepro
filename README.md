@@ -2,11 +2,11 @@
 
 [![CI](https://github.com/electricarts/local-tablepro/actions/workflows/ci.yml/badge.svg)](https://github.com/electricarts/local-tablepro/actions/workflows/ci.yml)
 [![Latest release](https://img.shields.io/github/v/release/electricarts/local-tablepro)](https://github.com/electricarts/local-tablepro/releases/latest)
-[![License: GPL-3.0](https://img.shields.io/badge/license-GPL--3.0-blue.svg)](LICENSE)
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 
 A community add-on for [Local](https://localwp.com/) on macOS. It opens the database of a running Local WordPress site in [TablePro](https://tablepro.app/) with one click.
 
-This project ports the workflow of [`aubreypwd/local-tableplus`](https://github.com/aubreypwd/local-tableplus) to TablePro. Because TablePro connection URLs cannot select an arbitrary MySQL Unix socket, the add-on creates a short-lived TCP bridge bound exclusively to `127.0.0.1` and forwards it to the selected site's Local socket.
+Version 2 is an independent implementation built from the documented Local Add-on API and TablePro's public URL interface. Because TablePro connection URLs cannot select an arbitrary MySQL Unix socket, the add-on creates a short-lived TCP bridge bound exclusively to `127.0.0.1` and forwards it to the selected site's Local socket. See [implementation provenance](docs/INDEPENDENT-REIMPLEMENTATION.md) and [license history](docs/LICENSE_HISTORY.md).
 
 Deutsch: [README.de.md](README.de.md)
 
@@ -19,7 +19,7 @@ Deutsch: [README.de.md](README.de.md)
 
 ## Install
 
-1. Download `local-tablepro-1.1.2.tgz` from the [latest release](https://github.com/electricarts/local-tablepro/releases/latest).
+1. Download the `.tgz` file from the [latest release](https://github.com/electricarts/local-tablepro/releases/latest).
 2. In Local, open **Add-ons → Installed → Install from Disk**.
 3. Select the `.tgz` file, enable **TablePro**, and restart Local.
 
@@ -64,7 +64,7 @@ Build an installable archive with:
 npm run release
 ```
 
-The archive is written to `dist/local-tablepro-1.1.2.tgz`.
+The archive is written to `dist/local-tablepro-2.0.0.tgz`.
 
 ## Troubleshooting
 
@@ -76,6 +76,6 @@ For more help, read [SUPPORT.md](SUPPORT.md) or [open an issue](https://github.c
 
 ## License
 
-GPL-3.0-only. See [LICENSE](LICENSE).
+MIT for version 2 and later. Releases through 1.1.2 remain GPL-3.0-only. See [LICENSE](LICENSE) and [license history](docs/LICENSE_HISTORY.md).
 
 TablePro and Local are independent products and trademarks of their respective owners. This community add-on is not affiliated with or endorsed by either project.
