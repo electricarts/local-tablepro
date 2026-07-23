@@ -64,7 +64,7 @@ Build an installable archive with:
 npm run release
 ```
 
-The v2 preview archive is written to `dist/local-tablepro-2.0.0-beta.1.tgz`.
+The archive is written to `dist/local-tablepro-2.0.0.tgz`.
 
 ## Troubleshooting
 

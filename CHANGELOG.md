@@ -1,12 +1,13 @@
 # Changelog
 
-## 2.0.0-beta.1 – Unreleased
+## 2.0.0 – 2026-07-23
 
 - Replaces every runtime source file with an independent TypeScript implementation based on the public Local Add-on API and TablePro URL behavior.
 - Moves availability checks, URL construction, application launch, and bridge lifecycle into the Local main process.
 - Replaces the class component with a functional React action and a narrow typed IPC protocol.
 - Replaces inherited project configuration, tests, and development linking scripts.
 - Changes the license for the new implementation to MIT; releases through 1.1.2 remain GPL-3.0-only.
+- Validated installation, database access, site restart behavior, and correct site selection with three simultaneously active Local sites.
 
 ## 1.1.2 – 2026-07-22
 

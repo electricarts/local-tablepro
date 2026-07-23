@@ -31,7 +31,7 @@ Local TablePro adds an “Open TablePro” action to the Database tab of each Lo
 - [x] Privacy, security, support, contribution, and conduct policies
 - [x] Automated tests, package-content verification, dependency audit, and release workflow
 - [x] Issue and pull-request templates
-- [ ] Repeat manual validation for the independent v2 implementation
+- [x] Manual validation of the independent v2 implementation, including installation, database access, restart behavior, and three simultaneously active sites
 - [x] No telemetry, remote service, database mutation, or shell interpolation
 - [ ] Submit the official form (requires the maintainer's consent and any personal contact fields requested by Local)
 - [ ] Respond to Local's review feedback and publish any requested revisions
