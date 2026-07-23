@@ -10,10 +10,14 @@
 | Build/package | TypeScript build and `npm pack` contents in CI |
 | Dependencies | Production dependency audit in CI |
 
+The v2 suite additionally validates typed request parsing, path confinement, supported application locations, bridge reuse, and end-to-end byte forwarding.
+
 ## Manual validation
 
 | Date | Local | macOS | TablePro | MySQL | Result |
 | --- | --- | --- | --- | --- | --- |
 | 2026-07-22 | 10.1.1 | macOS | 0.59.0 | 8.0.35 | Connected as `root@localhost` through the loopback bridge with TLS |
+
+The recorded manual result applies to the GPL-licensed 1.x implementation. Manual validation of v2 is required before a stable 2.0.0 release.
 
 Before each public release, repeat the one-click install and connection flow on the current stable Local and TablePro versions. Test additional MySQL versions when suitable clean Local sites are available; do not claim compatibility that has not been exercised.

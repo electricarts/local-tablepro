@@ -9,7 +9,7 @@ The official submission endpoint is [localwp.com/submit-addon](https://localwp.c
 - **Author:** Mario Peischl / electricarts
 - **Repository:** https://github.com/electricarts/local-tablepro
 - **Release:** https://github.com/electricarts/local-tablepro/releases/latest
-- **License:** GPL-3.0-only
+- **License:** MIT (version 2 and later)
 - **Platforms:** macOS 14 or later
 - **Minimum Local version:** 10.0.0
 - **External requirement:** TablePro
@@ -31,7 +31,7 @@ Local TablePro adds an “Open TablePro” action to the Database tab of each Lo
 - [x] Privacy, security, support, contribution, and conduct policies
 - [x] Automated tests, package-content verification, dependency audit, and release workflow
 - [x] Issue and pull-request templates
-- [x] Manual validation on Local 10.1.1, TablePro 0.59.0, and MySQL 8.0.35
+- [ ] Repeat manual validation for the independent v2 implementation
 - [x] No telemetry, remote service, database mutation, or shell interpolation
 - [ ] Submit the official form (requires the maintainer's consent and any personal contact fields requested by Local)
 - [ ] Respond to Local's review feedback and publish any requested revisions

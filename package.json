@@ -1,7 +1,7 @@
 {
   "name": "local-tablepro",
   "productName": "TablePro",
-  "version": "1.1.2",
+  "version": "2.0.0-beta.1",
   "author": "Mario Peischl <mario@electricarts.de>",
   "keywords": [
     "local-addon",
@@ -25,17 +25,19 @@
     "lib",
     "icon.png",
     "CHANGELOG.md",
-    "PRIVACY.md"
+    "PRIVACY.md",
+    "docs/INDEPENDENT-REIMPLEMENTATION.md",
+    "docs/LICENSE_HISTORY.md"
   ],
   "renderer": "lib/renderer.js",
   "main": "lib/main.js",
-  "license": "GPL-3.0-only",
+  "license": "MIT",
   "scripts": {
-    "build": "tsc",
-    "prepare": "tsc",
-    "test": "npm run build && node test/connection.test.js",
-    "link": "sh ./npm/scripts/symlink.sh",
-    "unlink": "sh ./npm/scripts/unlink.sh",
+    "build": "node scripts/clean-build.mjs && tsc",
+    "prepare": "npm run build",
+    "test": "npm run build && node test/run-tests.cjs",
+    "link": "npm run build && node scripts/addon-link.mjs link",
+    "unlink": "node scripts/addon-link.mjs unlink",
     "dist": "mkdir -p dist && npm pack --pack-destination dist",
     "release": "npm test && npm run dist"
   },
@@ -46,13 +48,11 @@
     "@types/react-dom": "^18.3.7",
     "react": "18.3.1",
     "react-dom": "18.3.1",
-    "react-router-dom": "4.3.1",
     "typescript": "^5.9.3"
   },
   "peerDependencies": {
     "react": ">=16.4.0",
-    "react-dom": ">=16.4.0",
-    "react-router-dom": "^4.3.1"
+    "react-dom": ">=16.4.0"
   },
   "engines": {
     "local-by-flywheel": ">=10.0.0"
