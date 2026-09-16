@@ -42,7 +42,7 @@
     "release": "npm test && npm run dist"
   },
   "devDependencies": {
-    "@getflywheel/local": "^10.1.1",
+    "@getflywheel/local": "^10.1.2",
     "@types/node": "^20.19.9",
     "@types/react": "^18.3.28",
     "@types/react-dom": "^18.3.7",
